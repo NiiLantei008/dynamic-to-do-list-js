@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        #todo-app {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        #task-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        #add-task-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        #add-task-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            background-color: #eeeeee;
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .remove-btn {
+            cursor: pointer;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+        
+        .remove-btn:hover {
+            background-color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-app">
+        <h1>My To-Do List</h1>
+        <input type="text" id="task-input" placeholder="Enter a new task">
+        <button id="add-task-btn">Add Task</button>
+        <ul id="task-list">
+            <!-- Tasks will appear here -->
+        </ul>
+    </div>
+
+    <script>
+        // SIMPLE TEST VERSION - ALL IN ONE FILE
+        
+        // Wait for page to load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded! JavaScript is working!');
+            
+            // Get elements
+            const addButton = document.getElementById('add-task-btn');
+            const taskInput = document.getElementById('task-input');
+            const taskList = document.getElementById('task-list');
+            
+            console.log('Add button:', addButton);
+            console.log('Task input:', taskInput);
+            
+            // Add task function
+            function addTask() {
+                console.log('Add Task function called!');
+                
+                const taskText = taskInput.value.trim();
+                console.log('Task text:', taskText);
+                
+                if (taskText !== "") {
+                    // Create list item
+                    const listItem = document.createElement('li');
+                    listItem.textContent = taskText;
+                    
+                    // Create remove button
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = "Remove";
+                    removeButton.className = 'remove-btn';
+                    
+                    // Add remove functionality
+                    removeButton.onclick = function() {
+                        console.log('Remove clicked!');
+                        taskList.removeChild(listItem);
+                    };
+                    
+                    // Add button to list item
+                    listItem.appendChild(removeButton);
+                    
+                    // Add list item to task list
+                    taskList.appendChild(listItem);
+                    
+                    // Clear input
+                    taskInput.value = "";
+                    taskInput.focus(); // Put cursor back in input
+                    
+                    console.log('Task added successfully!');
+                } else {
+                    console.log('Empty task - showing alert');
+                    alert("Please enter a task");
+                }
+            }
+            
+            // Add click event to button
+            addButton.addEventListener('click', addTask);
+            console.log('Event listener added to button');
+            
+            // Add Enter key support
+            taskInput.addEventListener('keypress', function(event) {
+                console.log('Key pressed:', event.key);
+                if (event.key === 'Enter') {
+                    console.log('Enter key detected - adding task');
+                    addTask();
+                }
+            });
+            
+            // Test: Add one example task
+            taskInput.value = "Example: Buy milk";
+            addTask();
+            taskInput.value = "";
+            
+            console.log('Setup complete! Try adding tasks.');
+        });
+    </script>
+</body>
+</html>
