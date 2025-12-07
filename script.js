@@ -1,53 +1,63 @@
 // script.js - To-Do List Application
 
-// Wait for page to load
+// Setup Event Listener for Page Load
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Get all elements we need
+    // Select DOM Elements
     const addButton = document.getElementById('add-task-btn');
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
     
-    // Function to add a task
+    // Create the addTask Function
     function addTask() {
-        // Get text from input and remove extra spaces
+        // Get and trim the task text
         const taskText = taskInput.value.trim();
         
-        // Check if not empty
+        // Check if taskText is not empty
         if (taskText !== "") {
-            // Create the task item
+            // Create a new li element
             const listItem = document.createElement('li');
+            
+            // Set its textContent to taskText
             listItem.textContent = taskText;
             
-            // Create remove button
+            // Create a new button element for removing the task
             const removeButton = document.createElement('button');
+            
+            // Set its textContent to "Remove"
             removeButton.textContent = "Remove";
+            
+            // Give it a class name of 'remove-btn'
             removeButton.className = 'remove-btn';
             
-            // Make remove button work
+            // Assign an onclick event to the remove button
             removeButton.onclick = function() {
+                // When triggered, removes the li element from taskList
                 taskList.removeChild(listItem);
             };
             
-            // Add button to task
+            // Append the remove button to the li element
             listItem.appendChild(removeButton);
             
-            // Add task to list
+            // Append the li to taskList
             taskList.appendChild(listItem);
             
-            // Clear the input box
+            // Clear the task input field
             taskInput.value = "";
         } else {
-            // Show message if empty
+            // Alert if task is empty
             alert("Please enter a task");
         }
     }
     
-    // Make Add button work
+    // Attach Event Listeners
+    
+    // Add an event listener to addButton that calls addTask when clicked
     addButton.addEventListener('click', addTask);
     
-    // Make Enter key work
+    // Add an event listener to taskInput for the 'keypress' event
     taskInput.addEventListener('keypress', function(event) {
+        // Check if event.key is equal to 'Enter' before calling addTask
         if (event.key === 'Enter') {
             addTask();
         }
